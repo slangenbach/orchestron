@@ -1,0 +1,18 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/python:3.13",
+    "features": {
+        "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {},
+        "ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
+        "ghcr.io/devcontainers-contrib/features/fish-apt-get:1": {}
+    },
+    "postCreateCommand": "uv sync",
+    "customizations": {
+        "extensions": [
+            "streetsidesoftware.code-spell-checker",
+            "ms-toolsai.jupyter",
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "charliermarsh.ruff"
+        ]
+    }
+}

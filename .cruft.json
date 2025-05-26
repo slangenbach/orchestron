@@ -1,0 +1,18 @@
+{
+  "template": "git@github.com:slangenbach/cookiecutter-python-uv.git",
+  "commit": "05de3fd511ad46912114095e5bffc791b996c14a",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "Orchestron",
+      "project_description": "ML Pipeline Orchestrator",
+      "project_slug": "orchestron",
+      "package_name": "orchestron",
+      "author": "Stefan Langenbach",
+      "email": "stefan@langenbach.online",
+      "_template": "git@github.com:slangenbach/cookiecutter-python-uv.git",
+      "_commit": "05de3fd511ad46912114095e5bffc791b996c14a"
+    }
+  },
+  "directory": null
+}
