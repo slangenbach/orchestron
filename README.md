@@ -1,5 +1,7 @@
 # Orchestron
 
+![CI](https://github.com/slangenbach/orchestron/actions/workflows/ci.yml/badge.svg)
+
 The tiny ML Pipeline orchestrator
 
 ## Prerequisites
