@@ -42,8 +42,8 @@ def test_get_pipeline_details(client: TestClient, dummy_data):
 
 def test_register_pipeline(client: TestClient, dummy_data):
     data = RegisterPipelineRequest(
-        name="Another test pipeline", description="Fresh out of the oven"
-    )
+        name="Another test pipeline", description="Fresh out of the oven", steps=None
+    )  # TODO: Add tests with steps
     response = client.post("/pipelines/", json=data.model_dump())
     new_pipeline_id = response.json().get("id")
 

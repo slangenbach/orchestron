@@ -8,11 +8,20 @@ from pydantic import BaseModel
 from orchestron.db.models import RunStatus
 
 
+class RegisterPipelineSteps(BaseModel):
+    """Step definition to register pipeline."""
+
+    name: str
+    command: str
+    dependencies: list[UUID] | None
+
+
 class RegisterPipelineRequest(BaseModel):
     """Register pipeline request."""
 
     name: str
     description: str | None = None
+    steps: list[RegisterPipelineSteps] | None
 
 
 class RegisterPipelineResponse(BaseModel):

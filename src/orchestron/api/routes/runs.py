@@ -12,6 +12,9 @@ from orchestron.api.schemas import (
 )
 from orchestron.api.types import DBSessionDependency
 from orchestron.db.models import Pipeline, PipelineRun
+from orchestron.logger import get_logger
+
+logger = get_logger(__name__)
 
 router = APIRouter(prefix="/pipelines", tags=["Runs"])
 
@@ -20,6 +23,7 @@ router = APIRouter(prefix="/pipelines", tags=["Runs"])
 async def list_runs(pipeline_id: UUID, db: DBSessionDependency):
     """List all runs of a pipeline."""
     try:
+        logger.debug("Listing runs")
         result = db.query(PipelineRun).filter(PipelineRun.pipeline_id == pipeline_id).all()
         if not result:
             raise HTTPException(
@@ -41,6 +45,7 @@ async def list_runs(pipeline_id: UUID, db: DBSessionDependency):
 async def get_run_details(pipeline_id: UUID, run_id: UUID, db: DBSessionDependency):
     """Get details of a pipeline run."""
     try:
+        logger.debug("Getting run details for pipeline %s and run %s", pipeline_id, run_id)
         result = (
             db.query(PipelineRun)
             .filter(PipelineRun.id == run_id, PipelineRun.pipeline.has(Pipeline.id == pipeline_id))
@@ -68,6 +73,7 @@ async def get_run_details(pipeline_id: UUID, run_id: UUID, db: DBSessionDependen
 )
 async def trigger_run(pipeline_id: UUID, db: DBSessionDependency):
     """Trigger pipeline run."""
+    logger.debug("Triggering run for pipeline %s", pipeline_id)
     run = PipelineRun(pipeline_id=pipeline_id)
 
     try:
