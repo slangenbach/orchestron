@@ -37,7 +37,7 @@ class Pipeline(Base):
 
     steps: Mapped[list["Step"]] = relationship(
         "Step", back_populates="pipeline", cascade="all, delete-orphan"
-    )  # TODO: What does cascade do?
+    )
     runs: Mapped[list["PipelineRun"]] = relationship(
         "PipelineRun", back_populates="pipeline", cascade="all, delete-orphan"
     )
@@ -52,9 +52,7 @@ class Step(Base):
     pipeline_id: Mapped[UUID] = mapped_column(UUID, ForeignKey("pipelines.id"), nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
     command: Mapped[str] = mapped_column(String, nullable=False)
-    dependencies: Mapped[list[uuid.UUID]] = mapped_column(
-        JSON, default=list, nullable=True
-    )  # How do we model dependencies as JSON?
+    dependencies: Mapped[list[uuid.UUID]] = mapped_column(JSON, default=list, nullable=True)
 
     pipeline: Mapped["Pipeline"] = relationship("Pipeline", back_populates="steps")
     step_runs: Mapped[list["StepRun"]] = relationship("StepRun", back_populates="step")
