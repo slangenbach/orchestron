@@ -59,3 +59,9 @@ class GetPipelineRunsResponse(BaseModel):
     """Get pipeline runs response."""
 
     runs: list[GetPipelineRunResponse | None]
+
+
+class TriggerPipelineRunResponse(BaseModel):
+    """Trigger pipeline run response."""
+
+    id: UUID

@@ -8,6 +8,7 @@ from orchestron.api.schemas import (
     GetPipelineRunDetailsResponse,
     GetPipelineRunResponse,
     GetPipelineRunsResponse,
+    TriggerPipelineRunResponse,
 )
 from orchestron.api.types import DBSessionDependency
 from orchestron.db.models import Pipeline, PipelineRun
@@ -58,3 +59,24 @@ async def get_run_details(pipeline_id: UUID, run_id: UUID, db: DBSessionDependen
         ) from err
     else:
         return result
+
+
+@router.post(
+    "/{pipeline_id}/trigger_run",
+    response_model=TriggerPipelineRunResponse,
+    status_code=status.HTTP_201_CREATED,
+)
+async def trigger_run(pipeline_id: UUID, db: DBSessionDependency):
+    """Trigger pipeline run."""
+    run = PipelineRun(pipeline_id=pipeline_id)
+
+    try:
+        db.add(run)
+        db.commit()
+        db.refresh(run)
+    except Exception as err:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error triggering run: {err}"
+        ) from err
+    else:
+        return TriggerPipelineRunResponse(id=run.id)

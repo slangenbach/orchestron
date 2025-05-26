@@ -10,6 +10,7 @@ from orchestron.api.schemas import (
     ListPipelinesResponse,
     RegisterPipelineRequest,
 )
+from orchestron.db.models import RunStatus
 
 
 def test_list_pipelines(client: TestClient, dummy_data):
@@ -86,3 +87,18 @@ def test_get_run_details(client: TestClient, dummy_data):
     )
 
     assert actual.json() == expected.model_dump(mode="json")
+
+
+def test_trigger_run(client: TestClient, dummy_data):
+    pipeline_id = str(dummy_data["id"])
+    response = client.post(f"/pipelines/{pipeline_id}/trigger_run")
+
+    assert response.status_code == status.HTTP_201_CREATED
+
+    new_run_id = response.json().get("id")
+
+    actual = client.get(f"/pipelines/{pipeline_id}/runs/{new_run_id}")
+    data = actual.json()
+
+    assert data["id"] == new_run_id
+    assert data["status"] == RunStatus.PENDING.value
