@@ -43,3 +43,8 @@ tasks:
     cmds:
       - uv run pytest
     desc: "Run tests"
+
+  dev:start-api:
+    cmds:
+      - uv run fastapi dev ./src/orchestron/api/app.py
+    desc: "Start API"
