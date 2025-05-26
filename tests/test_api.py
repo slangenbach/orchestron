@@ -1,3 +1,4 @@
+from fastapi import status
 from fastapi.testclient import TestClient
 
 from orchestron.api.schemas import (
@@ -42,9 +43,17 @@ def test_register_pipeline(client: TestClient, dummy_data):
     data = RegisterPipelineRequest(
         name="Another test pipeline", description="Fresh out of the oven"
     )
-    response = client.post("/pipelines/", json=data.model_dump_json())
+    response = client.post("/pipelines/", json=data.model_dump())
+    new_pipeline_id = response.json().get("id")
 
-    assert response.status_code == 201
+    assert response.status_code == status.HTTP_201_CREATED
+
+    actual = client.get(f"/pipelines/{new_pipeline_id}")
+    actual_data = actual.json()
+
+    assert actual_data["id"] == new_pipeline_id
+    assert actual_data["name"] == data.name
+    assert actual_data["description"] == data.description
 
 
 def test_list_runs(client: TestClient, dummy_data):

@@ -18,7 +18,7 @@ class RegisterPipelineRequest(BaseModel):
 class RegisterPipelineResponse(BaseModel):
     """Register pipeline response."""
 
-    name: str
+    id: UUID
 
 
 class GetPipelineResponse(BaseModel):

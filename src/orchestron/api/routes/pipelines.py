@@ -43,7 +43,7 @@ async def register_pipeline(request: RegisterPipelineRequest, db: DBSessionDepen
             detail=f"Could not register pipeline: {err}",
         ) from err
     else:
-        return RegisterPipelineResponse(name=pipeline.name)
+        return RegisterPipelineResponse(id=pipeline.id)
 
 
 @router.get("/", response_model=ListPipelinesResponse)
