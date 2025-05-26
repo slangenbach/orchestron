@@ -58,7 +58,7 @@ def test_list_runs(client: TestClient, dummy_data):
         ]
     )
 
-    actual = client.get(f"pipelines/{str(dummy_data['id'])}/runs")
+    actual = client.get(f"/pipelines/{str(dummy_data['id'])}/runs")
 
     assert actual.json() == expected.model_dump(mode="json")
 
@@ -73,7 +73,7 @@ def test_get_run_details(client: TestClient, dummy_data):
     )
 
     actual = client.get(
-        f"pipelines/{str(dummy_data['id'])}/runs/{str(dummy_data['runs'][0]['id'])}"
+        f"/pipelines/{str(dummy_data['id'])}/runs/{str(dummy_data['runs'][0]['id'])}"
     )
 
     assert actual.json() == expected.model_dump(mode="json")
